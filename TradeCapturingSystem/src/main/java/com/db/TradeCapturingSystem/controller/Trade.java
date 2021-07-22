@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
-
+/*
+ * Trade Model
+ * */
 
 
 public class Trade {

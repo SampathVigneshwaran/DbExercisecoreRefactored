@@ -2,7 +2,9 @@ package com.db.TradeCapturingSystem.controller;
 
 import java.time.Period;
 import java.time.LocalDate;
-
+/*
+ * Implemented the validator class
+ * */
 public class TradeValidator implements  Validator{
 	
 	@Override

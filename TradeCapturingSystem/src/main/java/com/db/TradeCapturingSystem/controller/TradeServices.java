@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
+/*
+ * Get and Post Services to get and update data 
+ * */
 @CrossOrigin(origins = { "http://localhost:3000" })
 @RestController
 public class TradeServices {

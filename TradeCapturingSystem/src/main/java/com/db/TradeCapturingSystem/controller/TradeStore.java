@@ -2,7 +2,10 @@ package com.db.TradeCapturingSystem.controller;
 import org.springframework.stereotype.Service;
 import java.util.*;
 import java.time.LocalDate;
-
+/*
+ * This is a temporary Database model made singleton such that we should'nt have more than once instance  
+ * which can stores consistent data 
+ * */
 @Service
 public class TradeStore {
 	
