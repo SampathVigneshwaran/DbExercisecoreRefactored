@@ -1,5 +1,8 @@
 package com.db.TradeCapturingSystem.controller;
 
+import java.time.Period;
+import java.time.LocalDate;
+
 public class TradeValidator implements  Validator{
 	
 	@Override
@@ -27,8 +30,8 @@ public class TradeValidator implements  Validator{
 	
 	@Override
 	public boolean validateMaturityDate(Trade trade) {
-
-		return (trade.getMaturityDate().isAfter(today)) ? true : false;
+		LocalDate yesterday = today.minus(Period.ofDays(1));
+		return (trade.getMaturityDate().isAfter(yesterday)) ? true : false;
 	}
 	
 	

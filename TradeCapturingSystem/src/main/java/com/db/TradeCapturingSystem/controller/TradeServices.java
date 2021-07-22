@@ -23,7 +23,7 @@ public class TradeServices {
 	@PostMapping("/trade")
 	public ResponseEntity<String> tradeValidateStore(@RequestBody Trade trade) throws Exception{
 	
-		System.out.println(trade.toString());
+
 		if(tradeValidator.validate(tradeValidator, trade)) {
 			
 			if (tradeStore.isTradeUpdate(trade)) {

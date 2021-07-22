@@ -50,7 +50,8 @@ public class TradeStore {
 	
 	public Trade getTrade(String tardeId) {
 		if (tradingDb.get(tardeId) != null) {
-			return tradingDb.get(tardeId).get(-1);
+			int idx = tradingDb.get(tardeId).size();
+			return tradingDb.get(tardeId).get(idx-1);
 		}
 		return null;
 	}

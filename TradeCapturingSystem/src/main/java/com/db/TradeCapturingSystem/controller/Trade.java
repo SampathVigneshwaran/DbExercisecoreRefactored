@@ -25,7 +25,6 @@ public class Trade {
 	
 	private char expired;
 	
-	//private static  List<Trade> eventsList = new ArrayList<Trade>();
 	
 	public Trade(String tradeId, int version, String counterParty, String bookId, LocalDate maturityDate, LocalDate creationDate ) {
 		this.tradeId = tradeId;
@@ -35,7 +34,7 @@ public class Trade {
 		this.maturityDate = maturityDate;
 		this.creationDate = creationDate;
 		this.expired = 'N';
-		//this.events(this);
+		
 	}
 
 	public String getTradeId() {
@@ -94,20 +93,7 @@ public class Trade {
 		this.expired = expired;
 	}
 	
-	/*private void events (Trade trade){
-		TradeStore tradeStoreInstance = TradeStore.getTradeStore();
-		Trade t = tradeStoreInstance.getTrade(trade.getTradeId());
-		eventsList.add(trade);
-		
-		if ( t != null) {
-			t.eventsList.addAll(eventsList);
-			eventsList = t.eventsList;	
-		}
-	}
 	
-	public List<Trade> getEvents(){
-		return this.eventsList;
-	}*/
 	
 	@Override
     public String toString() {
