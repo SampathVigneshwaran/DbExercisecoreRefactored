@@ -1,6 +1,7 @@
 package com.db.TradeCapturingSystem.controller;
 import org.springframework.stereotype.Service;
 import java.util.*;
+import java.time.LocalDate;
 
 @Service
 public class TradeStore {
@@ -12,6 +13,11 @@ public class TradeStore {
 	private TradeStore() {
 		
 			tradingDb = new HashMap<String, List<Trade>>();	 
+			ExpiryScheduler es = new ExpiryScheduler();
+
+			Timer timer = new Timer();
+			timer.schedule(es, 300);
+
 	}
 	
 	public static TradeStore getTradeStoreInstance() {
@@ -83,6 +89,18 @@ public class TradeStore {
 		}
 		
 		return finalTradeList;
+	}
+	
+	public void changeExpiryStatus() {
+		for (List<Trade>  tradeList: tradingDb.values()) {
+			
+			for (Trade trade : tradeList) {
+				if (trade.getMaturityDate().isBefore(LocalDate.now())) {
+					trade.setExpired('Y');
+				}
+			}
+			
+		}
 	}
 	
 
