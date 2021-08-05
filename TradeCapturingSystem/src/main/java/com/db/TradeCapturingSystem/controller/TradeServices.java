@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 /*
  * Get and Post Services to get and update data 
  * */
-//@CrossOrigin(origins = { "https://db-react-321914.uc.r.appspot.com/" })
-@CrossOrigin(origins = { "http://localhost:3000" })
+//@CrossOrigin(origins = { "http://localhost:3000" })
+@CrossOrigin(origins = { "https://db-react-321914.uc.r.appspot.com/" })
 @RestController
 public class TradeServices {
 	
