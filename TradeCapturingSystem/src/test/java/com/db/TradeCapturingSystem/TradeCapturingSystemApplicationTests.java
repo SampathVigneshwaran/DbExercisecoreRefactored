@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,9 +32,9 @@ class TradeCapturingSystemApplicationTests {
 	@Test
 	void testTradeValidator() {
 		
-		TradeValidator tradeValidator = new TradeValidator();
+		TradeValidator<Trade> tradeValidator = new TradeValidator<Trade>();
 		Trade trade = new Trade("T1", 1, "MEGA", "NEMU", LocalDate.now(), LocalDate.now());
-		boolean out = tradeValidator.validate(tradeValidator, trade);
+		boolean out = tradeValidator.validate(trade);
 		assertEquals(true, out);
 		
 		
@@ -67,6 +69,50 @@ class TradeCapturingSystemApplicationTests {
 		Trade t = tradeStoreInstance.getTrade("T2");
 		String str = "TradeId:'T2', Version:10, CounterParty:'MEGA', BookId:'NEMU', MaturityDate:2021-07-22, CreatedDate:2021-07-22, Expired:'N'";
 		assertEquals(str, t.toString());
+	}
+	
+	@Test
+	void testTradeCapturingSystem() {
+		
+		Trade[] trades = new Trade[4];
+		trades[0] = new Trade("T1", 1, "MEGA", "NEMU", LocalDate.now(), LocalDate.now());
+		trades[1] = new Trade("T2", 1, "MEGA", "NEMU", LocalDate.now(), LocalDate.now());
+		trades[2] = new Trade("T1", 4, "MEGA", "NEMU", LocalDate.now(), LocalDate.now());
+		trades[3] = new Trade("T1", 0, "MEGA", "NEMU", LocalDate.now(), LocalDate.now());
+		
+		String compareOutList = "[TradeId:'T1', Version:4, CounterParty:'MEGA', BookId:'NEMU', MaturityDate:2021-08-05, CreatedDate:2021-08-05, Expired:'N', TradeId:'T1', Version:1, CounterParty:'MEGA', BookId:'NEMU', MaturityDate:2021-08-05, CreatedDate:2021-08-05, Expired:'N', TradeId:'T2', Version:1, CounterParty:'MEGA', BookId:'NEMU', MaturityDate:2021-08-05, CreatedDate:2021-08-05, Expired:'N']";
+		
+		TradeValidator<Trade> tradeValidator = new TradeValidator<Trade>();
+		TradeStore tradeStoreInstance = TradeStore.getTradeStoreInstance();
+		tradeStoreInstance.clearStoreData();
+		try {
+		for (Trade trade :  trades) {
+		if (tradeValidator.validate(trade)) {
+			if (tradeStoreInstance.isTradeUpdate(trade)) {
+				tradeStoreInstance.updateTradeToStore(trade);
+			}
+			else {
+				tradeStoreInstance.addTradeToStore(trade);
+				}
+			}
+		}
+		}
+		catch(Exception e) {
+			assertEquals("Exception!! Trade T1 version is Lower than existing version !!", e.getMessage());
+		}
+		
+		List<Trade> tradeList = tradeStoreInstance.getAllTrades();
+		List<String> outStringList = new  ArrayList<String>();
+		for (Trade trade : tradeList) {
+			
+			outStringList.add(trade.toString());
+		}
+		
+		assertEquals(compareOutList, outStringList.toString());
+		
+		
+	
+
 	}
 
 }

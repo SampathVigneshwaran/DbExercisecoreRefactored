@@ -6,14 +6,14 @@ import java.time.LocalDate;
 */
 
 
-public interface Validator {
+public interface Validator<T> {
 	
 	public final LocalDate today = LocalDate.now();
 	
-	public boolean validateNotLowerVersion(Trade trade);
+	public boolean validateNotLowerVersion(T t) throws LowerVersionException;
 	
-	public boolean validateMaturityDate(Trade trade);
+	public boolean validateMaturityDate(T t);
 	
-	public boolean validate(Validator validateTrade, Trade trade);
-
+	public boolean validate(T t) throws LowerVersionException;
+	
 }

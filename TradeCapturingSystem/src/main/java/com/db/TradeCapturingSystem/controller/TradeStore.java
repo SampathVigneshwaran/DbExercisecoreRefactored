@@ -11,15 +11,15 @@ public class TradeStore {
 	
 	private static TradeStore dbInstance = null;
 	
-	private  Map<String, List<Trade>> tradingDb = null;
+	private  LinkedHashMap<String, List<Trade>> tradingDb = null;
 	
 	private TradeStore() {
 		
-			tradingDb = new HashMap<String, List<Trade>>();	 
+			tradingDb = new LinkedHashMap<String, List<Trade>>();	 
 			ExpiryScheduler es = new ExpiryScheduler();
 
-			Timer timer = new Timer();
-			timer.schedule(es, 300);
+			Timer t = new Timer();
+			t.scheduleAtFixedRate(es, 0, 10*1000);
 
 	}
 	
@@ -92,6 +92,10 @@ public class TradeStore {
 		}
 		
 		return finalTradeList;
+	}
+	
+	public void clearStoreData() {
+		tradingDb.clear();
 	}
 	
 	public void changeExpiryStatus() {
